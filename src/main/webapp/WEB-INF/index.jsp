@@ -19,12 +19,20 @@
 	<section>
 
 		<div class="container">
-		
-		<div>
-			<c:out value="${errorMessage }"></c:out>
-		</div>
-		
-		<h1 class="text-center mt-5 mb-3">List of languages</h1>
+
+			<c:set var="mensaje" value="${errorMessage }" />
+			<c:if test="${mensaje != null }">
+
+				<div
+					class="alert alert-${clase} alert-dismissible fade show messageOut"
+					role="alert">
+					<button type="button" class="btn-close" data-bs-dismiss="alert"
+						aria-label="Close"></button>
+					<strong><c:out value="${errorMessage }"></c:out></strong>
+				</div>
+			</c:if>
+
+			<h1 class="text-center mt-5 mb-3">List of languages</h1>
 
 			<table class="table table-striped table-hover">
 
@@ -42,51 +50,61 @@
 				</thead>
 
 				<tbody>
-				
-				<c:forEach var="language" items="${languageList}">
-				
-					<tr>
-						<td><c:out value="${language.name}"></c:out></td>
-						<td><c:out value="${language.creator}"></c:out></td>
-						<td><c:out value="${language.version}"></c:out></td>
-						
-						<td class="d-flex align-items-center">
-						
-						<form action="/delete/${language.id}" method="POST">
-						<button type="submit" class="btn btn-link text-danger">delete</button>
-						</form>
-						
-						
-						<form action="/edit/${language.id }" method="GET"> 
-						<button type="submit" class="btn btn-link text-success">edit</button>
-						</form>
-						</td>
-						
-					</tr>
 
-					</c:forEach>					
-					
+					<c:forEach var="language" items="${languageList}">
+
+						<tr>
+							<td><c:out value="${language.id}"></c:out> <c:out
+									value="${language.name}"></c:out></td>
+							<td><c:out value="${language.creator}"></c:out></td>
+							<td><c:out value="${language.version}"></c:out></td>
+
+
+							<td class="d-flex align-items-center">
+
+
+								<form action="/delete/${language.id}" method="POST">
+
+									<button type="submit" class="btn btn-link text-danger">delete</button>
+								</form>
+
+
+								<form action="/edit/${language.id }" method="GET">
+									<button type="submit" class="btn btn-link text-success">edit</button>
+								</form>
+
+
+
+							</td>
+
+						</tr>
+
+					</c:forEach>
+
 
 
 				</tbody>
 
 
 			</table>
-			
-			
+
+
 			<h1 class="text-center mt-5 mb-3">Add a new language</h1>
-			
+
 			<form action="/create" method="POST">
-			<label for="nameLanguage" class="form-label">Name</label>
-			<input type="text" id="nameLanguage" name="nameLanguage" class="form-control"/>
-			<label for="creatorLanguage" class="form-label">Creator</label>
-			<input type="text" id="creatorLanguage" name="creatorLanguage" class="form-control" />
-			<label for="versionLanguage" class="form-label">Version</label>
-			<input type="text" id="versionLanguage" name="versionLanguage" class="form-control" />
-			
-			<button type="submit" class="btn btn-success mt-3">Add Language</button>
-			
-			
+				<label for="nameLanguage" class="form-label">Name</label> <input
+					type="text" id="nameLanguage" name="nameLanguage"
+					class="form-control" /> <label for="creatorLanguage"
+					class="form-label">Creator</label> <input type="text"
+					id="creatorLanguage" name="creatorLanguage" class="form-control" />
+				<label for="versionLanguage" class="form-label">Version</label> <input
+					type="text" id="versionLanguage" name="versionLanguage"
+					class="form-control" />
+
+				<button type="submit" class="btn btn-success mt-3">Add
+					Language</button>
+
+
 			</form>
 
 

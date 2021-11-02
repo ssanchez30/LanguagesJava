@@ -11,7 +11,7 @@ public interface LanguageRepository extends Repository<Language, Long> {
 	
 	List<Language> findAll();
 	Language save(Language language);
-	Optional<Language>findById(int id);
-	void deleteById(int id);
+	Optional<Language>findById(Long id);
+	void deleteById(Long id);
 
 }

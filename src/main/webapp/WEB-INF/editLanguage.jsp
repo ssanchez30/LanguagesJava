@@ -19,6 +19,8 @@
 	<section>
 
 		<div class="container">
+		
+		
 
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
 				<div class="container-fluid">
@@ -39,9 +41,17 @@
 				</div>
 			</nav>
 			
-			<div>
-				<c:out value="${errorMessage }"></c:out>
+			<c:set var="mensaje" value="${errorMessage }" />
+		<c:if test="${mensaje != null }">
+
+			<div
+				class="alert alert-${clase} alert-dismissible fade show messageOut"
+				role="alert">
+				<button type="button" class="btn-close" data-bs-dismiss="alert"
+					aria-label="Close"></button>
+				<strong><c:out value="${errorMessage }"></c:out></strong>
 			</div>
+		</c:if>
 
 
 			<form action="/updated/${language.id}" method="POST">

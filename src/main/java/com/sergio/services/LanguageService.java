@@ -25,7 +25,7 @@ public class LanguageService {
 		return languageRepository.save(language);
 	}
 	
-	public Language getLanguageById(int id) {
+	public Language getLanguageById(Long id) {
 		Optional<Language>optionalLanguage = languageRepository.findById(id);
 		if (optionalLanguage.isPresent()) {
 			return optionalLanguage.get();
@@ -38,7 +38,7 @@ public class LanguageService {
 		return languageRepository.save(language);
 	}
 	
-	public void deleteLanguage(int id) {
+	public void deleteLanguage(Long id) {
 		Optional<Language>optionalLanguage = languageRepository.findById(id);
 		if (optionalLanguage.isPresent()) {
 			languageRepository.deleteById(id);

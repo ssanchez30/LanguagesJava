@@ -38,15 +38,36 @@ public class LanguagesController {
 			@RequestParam(value="versionLanguage")String versionLanguage,
 			RedirectAttributes redirectAttributes) {
 		
-		Language language = new Language(nameLanguage, creatorLanguage, versionLanguage);
-		languageService.createLanguage(language);
 		
-		return "redirect:/";
+		if (!nameLanguage.equalsIgnoreCase("") && !creatorLanguage.equalsIgnoreCase("") && !versionLanguage.equalsIgnoreCase("")) {
+			
+			Long id = Long.parseLong("0");
+			
+			Language language = new Language(id, nameLanguage, creatorLanguage, versionLanguage);
+			languageService.createLanguage(language);
+			
+			redirectAttributes.addFlashAttribute("errorMessage", "Language created successfully!!")
+			.addFlashAttribute("clase", "success");
+			
+			return "redirect:/";
+			
+			
+		}else {
+			
+			redirectAttributes.addFlashAttribute("errorMessage", "Please checky any blank input!!")
+			.addFlashAttribute("clase", "danger");
+			
+			return "redirect:/";
+			
+			
+		}
+		
+		
 	}
 	
 	
 	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
-		public String showData(@PathVariable(value="id")int id,
+		public String showData(@PathVariable(value="id")Long id,
 				RedirectAttributes redirectAttributes, Model model) {
 		
 		Language currentLanguage = languageService.getLanguageById(id);
@@ -55,7 +76,8 @@ public class LanguagesController {
 		
 		if(currentLanguage == null) {
 			
-			redirectAttributes.addFlashAttribute("errorMessage", "That id doesnt exists");
+			redirectAttributes.addFlashAttribute("errorMessage", "That id doesn't exists")
+			.addFlashAttribute("clase", "danger");
 		}else {
 			
 			model.addAttribute("language", currentLanguage);
@@ -67,7 +89,7 @@ public class LanguagesController {
 	
 	
 	@RequestMapping(value="/updated/{id}", method=RequestMethod.POST)
-	public String updateLanguage(@PathVariable(value="id")int id,
+	public String updateLanguage(@PathVariable(value="id")Long id,
 			@RequestParam(value="languageName")String languageName,
 			@RequestParam(value="creatorName") String creatorName,
 			@RequestParam(value="versionLanguage")String versionLanguage,
@@ -77,12 +99,16 @@ public class LanguagesController {
 		
 		if(currentLanguage == null) {
 			
-			redirectAttributes.addFlashAttribute("errorMessage", "That id doesnt exists");
+			redirectAttributes.addFlashAttribute("errorMessage", "That id doesn't exists")
+			.addFlashAttribute("clase","danger");
 		}else {
 			currentLanguage.setName(languageName);
 			currentLanguage.setCreator(creatorName);
 			currentLanguage.setVersion(versionLanguage);
 			languageService.updateLanguage(currentLanguage);
+			
+			redirectAttributes.addFlashAttribute("errorMessage", "Language updated successfully!!!")
+			.addFlashAttribute("clase","success");
 		}
 		
 		return "redirect:/";
@@ -90,19 +116,24 @@ public class LanguagesController {
 	
 	
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.POST)
-	public String deleteData(@PathVariable(value="id")int id,
+	public String deleteData(@PathVariable(value="id")Long id,
 			RedirectAttributes redirectAttributes) {
 	
+		
+		
 	Language currentLanguage = languageService.getLanguageById(id);
 	
-	//System.out.println(currentLanguage.getName());
 	
 	if(currentLanguage == null) {
 		
-		redirectAttributes.addFlashAttribute("errorMessage", "That id doesnt exists");
+		redirectAttributes.addFlashAttribute("errorMessage", "That id doesn't exists")
+		.addFlashAttribute("clase", "danger");
 	}else {
 		
 		languageService.deleteLanguage(id);
+		
+		redirectAttributes.addFlashAttribute("errorMessage", "Language deleted successfully")
+		.addFlashAttribute("clase", "info");
 		return "redirect:/";
 		
 	}

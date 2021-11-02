@@ -18,9 +18,17 @@
 
 	<section>
 	
-		<div>
-			<c:out value="${errorMessage }"></c:out>
-		</div>
+		<c:set var="mensaje" value="${errorMessage }" />
+		<c:if test="${mensaje != null }">
+
+			<div
+				class="alert alert-${clase} alert-dismissible fade show messageOut"
+				role="alert">
+				<button type="button" class="btn-close" data-bs-dismiss="alert"
+					aria-label="Close"></button>
+				<strong><c:out value="${errorMessage }"></c:out></strong>
+			</div>
+		</c:if>
 
 		<div class="container d-flex justify-content-center mt-5">
 
